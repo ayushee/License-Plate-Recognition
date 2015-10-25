@@ -9,8 +9,6 @@ f=imresize(f,[400 NaN]);                   %%image loading unit
 imshow(f);
 g=rgb2gray(f);
 g=medfilt2(g,[3 3]);
-figure (10);
-imshow(g);
 %2d median filter
 %reduce salt n pepper noise
 %the median value in the 3-by-3 neighborhood
@@ -19,18 +17,15 @@ imshow(g);
 stre=strel('disk',1);    %strucruring element
 %structuring element of disk shape(matrix of 1) with radius 1
 
-gi=imdilate(g,stre);figure(9); subplot(3,1,1); imshow(gi);
+gi=imdilate(g,stre);
 %fill gaps
 
 ge=imerode(g,stre);   %%%% morphological image processing
 %shrink or eliminate irrelevant details
-figure(9); subplot(3,1,2); imshow(ge);
 
 gdiff=imsubtract(gi,ge);
-figure(9); subplot(3,1,3); imshow(gdiff);
 gdiff=mat2gray(gdiff);
 %amin and amax as min and mx value of image
-
 
 gdiff=conv2(gdiff,[1 1;1 1]); %convolution of matrix   %brighten(doubt)
 
@@ -50,11 +45,6 @@ imshow(er)
 out1=imsubtract(B,er);
 
 F=imfill(out1,'holes');      %filling the object
-figure(11);
-subplot(1,2,1);
-imshow(out1);
-subplot(1,2,2);
-imshow(F);
 H=bwmorph(F,'thin',1); 
 %morphological operation on binary image
 %thin it once  %to remove useless thin lines
@@ -62,7 +52,6 @@ H=imerode(H,strel('line',3,90));
 %structuring element of lenf=gth 3 and degree 90
 figure(4)
 imshow(H)
-
 
 final=bwareaopen(H,floor((a1/15)*(b1/15)));  
 %remove objects that hav fewer pixels than second argument
